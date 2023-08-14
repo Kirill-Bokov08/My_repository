@@ -1,7 +1,12 @@
 from django.db import models
 from django.db import migrations
+from django.contrib.auth import get_user_model
+from django.utils.safestring import mark_safe
+
 
 # Create your models here.
+
+User = get_user_model()
 
 class advertisements(models.Model):
     # Заголовок
@@ -22,5 +27,17 @@ class advertisements(models.Model):
     def __str__(self): 
         return f'<Advertisement: Advertisement(id={self.id}, title={self.title}, price={self.price})>'
     # <Advertisement: Advertisement(id=1, title=Заголовок №1, price=100.00)>.
+    # Поле для создателя обьявления(Пользователя)
+    user = models.ForeignKey(User, verbose_name='Пользователь', on_delete=models.CASCADE)
+    # Поле для изображения
+    image = models.ImageField('Изображение', upload_to='online_shop/')
+
+    def image_tag(self):
+        if self.image:
+            return mark_safe('<img src="%s" style="width: 45px; height:45px;" />' % self.image.url)
+        else:
+            return "Ничего не найденно"
+    image_tag.short_description = 'Изображение'
+
     class Meta: 
         db_table = 'advertisements'

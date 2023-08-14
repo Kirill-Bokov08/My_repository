@@ -1,11 +1,17 @@
 from django.shortcuts import render
 # подключаем объект для выполнения http-запросов
 from django.http import HttpResponse
+from .models import advertisements
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    online_shops = advertisements.objects.all()
+    # Создаем контекст шаблона
+    context = {
+        'online_shops': online_shops
+        }
+    return render(request, 'index.html', context)
 def top_sellers(request):
     return render(request, 'top_sellers.html')
 def advertisement_post(request):

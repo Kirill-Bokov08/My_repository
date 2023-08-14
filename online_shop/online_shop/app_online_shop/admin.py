@@ -1,16 +1,16 @@
 from django.contrib import admin
-from.models import advertisements
+from .models import advertisements
 # Register your models here.
 
 # Создаем модель панели регестрирования 
 class advertisements_admin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'description', 'price', 'created_time', 'auction','update_time']
+    list_display = ['id', 'title', 'description', 'price', 'created_time', 'auction','update_time', 'image_tag', ]
     list_filter = ['auction', 'created_time', 'update_time']
     actions = ['make_auction_as_false', 'make_auction_as_true']
 
     fieldsets = (
         ('общее', {
-            'fields': ('title', 'description')
+            'fields': ('title', 'description', 'image_tag', 'user', 'update_time')
         }), 
 
         ('Финансы', {
